@@ -4,7 +4,7 @@ public class MyArrayList implements MyList {
     int size;
 
     public MyArrayList() {
-        arrays = new String[MAX_SIZE];
+        arrays = new String[size];
         size = 0;
     }
 
@@ -39,16 +39,21 @@ public class MyArrayList implements MyList {
     // проверяет есть ли var
     @Override
     public void add(String string) {
-        arrays[size] = string;
+        String[] newArray = new String[size+1];
+        newArray[size] = string;
+        for (int i = 0; i < size; i++) {
+            newArray[i] = arrays[i];
+        }
         size++;
-
+        arrays=newArray;
     }
 
     @Override
     public boolean remove(String var) {
         for (int i = 0; i < size; i++) {
             if (arrays[i].equals(var)) {
-                arrays[i] = null;
+                int q = i;
+                shiftFromTo(q);
             }
         }
         return false;
@@ -61,4 +66,10 @@ public class MyArrayList implements MyList {
         }
         return arrays[i];
     }
-}
+    private void shiftFromTo(int index){
+        for (int i = index; i < size-1; i++) {
+            arrays[i]=arrays[i+1];
+            }
+//        arrays[size] = "понг";
+        }
+    }
