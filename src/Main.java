@@ -6,8 +6,10 @@ public class Main {
         myList.add("Привет мир!3");
         myList.add("Привет мир!4");
         myList.add("Привет мир!5");
-
+        
         myList.remove("Привет мир!3");
+
+        System.out.println(myList.isEmpty());
 
 
         for (int i = 0; i < 5; i++) {

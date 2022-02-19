@@ -28,48 +28,58 @@ public class MyArrayList implements MyList {
     // пустой чи не
     @Override
     public boolean contains(String var) {
-        for (int i = 0; i < size; i++) {
-            if (arrays[i].equals(var)) {
-                return true;
-            }
+        try {
+            find(var);
+            return true;
+        } catch (ElementNotFoundException e) {
+            return false;
         }
-        return false;
     }
 
     // проверяет есть ли var
     @Override
     public void add(String string) {
-        String[] newArray = new String[size+1];
+        String[] newArray = new String[size + 1];
         newArray[size] = string;
         for (int i = 0; i < size; i++) {
             newArray[i] = arrays[i];
         }
         size++;
-        arrays=newArray;
+        arrays = newArray;
     }
 
     @Override
     public boolean remove(String var) {
-        for (int i = 0; i < size; i++) {
-            if (arrays[i].equals(var)) {
-                int q = i;
-                shiftFromTo(q);
-            }
+        try {
+            int i = find(var);
+            shiftFromTo(i);
+            size--;
+            return true;
+        } catch (ElementNotFoundException e) {
+            return false;
         }
-        return false;
     }
 
     @Override
     public String get(int i) {
-        if (i >= MAX_SIZE) {
+        if (i >= size) {
             return null;
         }
         return arrays[i];
     }
-    private void shiftFromTo(int index){
-        for (int i = index; i < size-1; i++) {
-            arrays[i]=arrays[i+1];
-            }
-//        arrays[size] = "понг";
+
+    private void shiftFromTo(int index) {
+        for (int i = index; i < size - 1; i++) {
+            arrays[i] = arrays[i + 1];
         }
     }
+
+    private int find(String var) throws ElementNotFoundException {
+        for (int i = 0; i < size; i++) {
+            if (arrays[i].equals(var)) {
+                return i;
+            }
+        }
+        throw new ElementNotFoundException();
+    }
+}
